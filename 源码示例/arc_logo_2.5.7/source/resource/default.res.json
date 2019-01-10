@@ -1,0 +1,33 @@
+{
+	"groups":[
+	{
+		"keys":"club_png,club2_png,egret_icon_png,bg_icon_png,role_png",
+		"name":"preload"
+	}],
+	"resources":[
+	{
+		"name":"club_png",
+		"type":"image",
+		"url":"assets/club.png"
+	},
+	{
+		"name":"club2_png",
+		"type":"image",
+		"url":"assets/club2.png"
+	},
+	{
+		"name":"egret_icon_png",
+		"type":"image",
+		"url":"assets/egret_icon.png"
+	},
+	{
+		"name":"bg_icon_png",
+		"type":"image",
+		"url":"assets/bg_icon.png"
+	},
+	{
+		"name":"role_png",
+		"type":"image",
+		"url":"assets/role.png"
+	}]
+}

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Box2web</title>
+	<script type="text/javascript" src="../../js/Box2dWeb-2.1.a.3.min.js"></script>
+	<script type="text/javascript" src="../../js/lufylegend-1.10.1.js"></script>
+</head>
+<body onload='init(10,"mylegend",1800,500,main,LEvent.INIT)'>
+	<div id="mylegend">loading....</div>
+<script type="text/javascript">
+var imglist={};
+var imgData=new Array(
+		{name:'face',path:'./face.jpg'}
+	);
+function main(){
+		LGlobal.setDebug(true);
+		backLayer=new LSprite();
+		backLayer.graphics.drawRect(0,"#000000",[0,0,600,400],false);
+		addChild(backLayer);
+
+		LLoadManage.load(imgData,null,gameInit);
+		
+}
+function gameInit(result){
+	imglist=result;
+	LGlobal.box2d=new LBox2d();
+	cLayer=new LSprite();
+	backLayer.addChild(cLayer);
+	cLayer.x=300;
+	cLayer.y=490;
+	cLayer.addBodyPolygon(1800,10,0,1,0.4,0.2);
+
+	cLayer=new LSprite();
+	cLayer.x=100;
+	cLayer.y=100;
+	backLayer.addChild(cLayer);
+	cLayer.addBodyPolygon(100,120,0,0.5,0.4,0.2)
+	bitmap=new LBitmap(new LBitmapData(imglist['face'],50,50,100,120));
+	cLayer.addChild(bitmap);
+
+
+	cLayer=new LSprite();
+	cLayer.x=240;
+	cLayer.y=100;
+	backLayer.addChild(cLayer);
+	
+	bitmap=new LBitmapData(imglist['face'],50,50);
+	cLayer.graphics.beginBitmapFill();
+	cLayer.graphics.beginBitmapFill(bitmap);
+	cLayer.graphics.drawArc(1,"#000000",[50,50,50,0,2*Math.PI],true);
+	cLayer.addBodyCircle(50,0,0,0,5,0.4,0.6);
+
+	cLayer=new LSprite();
+	cLayer.x=320;
+	cLayer.y=100;
+	backLayer.addChild(cLayer);
+	cLayer.graphics.beginBitmapFill(bitmap);
+	var orgArr=[[0,25],[25,0],[150,25],[150,75],[25,100],[0,75]];
+	cLayer.graphics.drawVertices(1,"#000000",orgArr,true);
+
+	var shapeArray=[
+		[[0,25],[25,0],[150,25],[150,75],[25,100],[0,75]]
+	];
+	cLayer.addBodyVertices(shapeArray,25,75,1,2,.8,.2);
+	cLayer.setBodyMouseJoint(true);
+
+	//demoGuanjie();
+	//demoRatoteGuanjie();
+	//hualunGuanjie();
+	// moveGuanjie()
+	hanjieGuanjie();
+	return;
+
+	var shapArr = [
+		[[0,0],[10,0],[10,400],[0,400]],
+		[[0,0],[600,0],[600,400],[590,400]],
+		[[590,0],[600,0],[600,400],[590,400]],
+		[[0,390],[600,390],[600,400],[0,400]]
+	];
+	cLayer.addBodyVertices(shapArr,0,0,0,.5,.4,.5);
+
+	for (var i=0;i<10;i++){
+		add();
+	}
+}
+function add(){
+	cLayer=new LSprite();
+	cLayer.x=Math.random()*10*LGlobal.box2d.drawScale;
+	cLayer.y=Math.random()*10*LGlobal.box2d.drawScale;
+	backLayer.addChild(cLayer);
+	var r=(Math.random()+0.1)*LGlobal.box2d.drawScale;
+	if (Math.random() >0.5){
+		cLayer.addBodyCircle(r,0,0,1,.5,.4,.5);
+	} else {
+		cLayer.addBodyPolygon(r,r,1,5,.4,.2);
+
+	}
+	cLayer.setBodyMouseJoint(true);
+}
+function demoGuanjie(){
+	box1=new LSprite();
+	box1.x=600;
+	box1.y=100;
+	backLayer.addChild(box1);
+	box1.addBodyPolygon(100,60,1,5,.4,.2);
+	box1.setBodyMouseJoint(true);
+
+	box2=new LSprite();
+	box2.x=750;
+	box2.y=100;
+	backLayer.addChild(box2);
+	box2.addBodyPolygon(100,60,1,5,.4,.2);
+	box2.setBodyMouseJoint(true);
+
+	LGlobal.box2d.setDistanceJoint(box1.box2dBody, box2.box2dBody);
+	LGlobal.box2d.setRevoluteJoint(box1.box2dBody, box2.box2dBody);
+}
+function demoRatoteGuanjie(){
+	box1=new LSprite();
+	box1.x=600;
+	box1.y=100;
+	backLayer.addChild(box1);
+	box1.addBodyCircle(100,0,0,1,1,.4,.2);
+	box1.setBodyMouseJoint(true);
+
+	box2=new LSprite();
+	box2.x=650;
+	box2.y=100;
+	backLayer.addChild(box2);
+	box2.addBodyCircle(10,0,0,0,1,.4,.2);
+	// box2.setBodyMouseJoint(true);
+
+	
+	LGlobal.box2d.setRevoluteJoint(box1.box2dBody, box2.box2dBody, [-360,10*360],[200,2]);
+}
+function hualunGuanjie(){
+	box1=new LSprite();
+	box1.x=600;
+	box1.y=100;
+	backLayer.addChild(box1);
+	box1.addBodyCircle(20,0,0,1,1,.4,.2);
+	box1.setBodyMouseJoint(true);
+
+	box2=new LSprite();
+	box2.x=750;
+	box2.y=100;
+	backLayer.addChild(box2);
+	box2.addBodyCircle(20,0,0,1,1,.4,.2);
+	box2.setBodyMouseJoint(true);
+
+	
+	LGlobal.box2d.setPulleyJoint(box1.box2dBody, box2.box2dBody, [0,50,600],[0,100,300],1.0);
+}
+function moveGuanjie(){
+	box1=new LSprite();
+	box1.x=600;
+	box1.y=300;
+	backLayer.addChild(box1);
+	box1.addBodyCircle(20,0,0,0,1,.4,.2);
+	box1.setBodyMouseJoint(true);
+
+	box2=new LSprite();
+	box2.x=750;
+	box2.y=300;
+	backLayer.addChild(box2);
+	box2.addBodyCircle(20,0,0,1,1,.4,.2);
+	box2.setBodyMouseJoint(true);
+
+	
+	LGlobal.box2d.setPrismaticJoint(box1.box2dBody, box2.box2dBody, [0,1],[-5,2],[1,0]);
+}
+function hanjieGuanjie(){
+	box1=new LSprite();
+	box1.x=600;
+	box1.y=400;
+	backLayer.addChild(box1);
+	box1.addBodyCircle(50,0,0,1,1,.4,.2);
+	// box1.setBodyMouseJoint(true);
+
+	box2=new LSprite();
+	box2.x=650;
+	box2.y=300;
+	backLayer.addChild(box2);
+	box2.addBodyCircle(70,0,0,1,1,.4,.2);
+	box2.setBodyMouseJoint(true);
+
+	
+	LGlobal.box2d.setWeldJoint(box1.box2dBody, box2.box2dBody);
+}
+
+</script>
+</body>
+</html>

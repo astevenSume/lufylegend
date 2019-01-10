@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>plane now</title>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+<div class="page">
+	<div class="content" id="main">
+		<!-- <img id="face" src="face.jpg" width="320px" height="200px" /> <br /> -->
+		<canvas id="canvas1"  width="600" height="300"></canvas>
+	</div>    
+	<div>
+		<span onclick="linecolor='yellow';" >黄线</span>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="../../js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+	var c=document.getElementById("canvas1");
+	var img=document.getElementById("face");
+	var ctx=c.getContext("2d");
+
+	ctx.fillStyle="black";
+	ctx.fillRect(0,0,600,300);
+
+	var onoff=false;
+	var oldx=-10;
+	var oldy=-10;
+
+	var linecolor="white";
+	var linw=4;
+
+	c.addEventListener("mousemove",draw,false);
+	c.addEventListener("mousedown",down,false);
+	c.addEventListener("mouseup",up,false);
+
+
+
+	function down(e) {
+		onoff=true;
+		oldx=e.pageX-10;
+		oldy=e.pageY-10;
+		console.log(oldy);
+	}
+	function up(e){
+		onoff=false;
+	}
+	function draw(e) {
+		if (onoff==true){
+			var newx=e.pageX-10;
+			var newy=e.pageY-10;
+
+			ctx.beginPath();
+			ctx.moveTo(oldx,oldy);
+			ctx.lineTo(newx,newy);
+			ctx.strokeStyle=linecolor;
+			ctx.lineWidth=linw;
+			ctx.lineCap="round";
+			ctx.stroke();
+
+			oldx=newx;
+			oldy=newy;
+		}
+		
+
+	}
+
+
+</script>
+</html>

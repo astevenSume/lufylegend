@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>韶泰峰会</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<style type="text/css">
+		body {margin: 0 ;
+			  overflow-y: hidden;}
+
+	</style>
+	<script type="text/javascript" src="./js/lufylegend-1.10.1.js"></script>
+	<script type="text/javascript" src="./js/Background.js"></script>
+	<script type="text/javascript" src="./js/Avatar.js"></script>
+	<script type="text/javascript" src="./js/Luck.js"></script>
+	<script type="text/javascript" src="./js/Main.js"></script>
+	<script type="text/javascript" src="./js/Star.js"></script>	
+</head>
+<body>
+
+	<div id="lucking">loading...</div>
+	<?php 
+		//每有新数据传来时，加入头像 ，也可以在main中js写
+	?>
+
+	<script type="text/javascript">
+		function doScroll(){
+			if(window.pageYOffset===0) {
+				window.scrollTo(0,1);
+			}
+		}
+		var appwidth=1920;
+		var appheight=1920*innerHeight/innerWidth;
+		var rx=appwidth/innerWidth; //x向比例系数
+		var ry=appheight/innerHeight; //y向比例系数	
+
+		window.onload=function(){
+			setTimeout(doScroll, 100);
+			LInit(1000/100,"lucking",appwidth,appheight,main,LEvent.INIT);
+
+			// init();
+			// //画星星
+			// for (var i=0;i<starCount;i++) {
+			// 	var star = new Star();
+			// 	star.init();
+			// 	star.draw();
+			// 	arr.push(star);
+			// }
+
+			// //画流星
+			// for (var i=0;i<rainCount;i++) {
+			// 	var rain = new MeteorRain();
+			// 	rain.init();
+			// 	rain.draw();
+			// 	rains.push(rain);
+			// }
+
+			// /*drawMoon();//绘制月亮*/
+			// playStars();//绘制闪动的星星
+			// playRains();//绘制流星			
+		}
+
+		window.onorientationchange=function(){
+			setTimeout(doScroll,100);
+		}
+		window.onresize=function(){
+			setTimeout(doScroll,100);
+			onWindowResize();
+		}
+		function onWindowResize(){	
+			// trace(LGlobal.width);
+	  // 		trace(LGlobal.height);
+			   // LGlobal.width=window.innerWidth;
+			   // LGlobal.height=window.innerHeight;
+	   //      LGlobal.canvasObj.width = LGlobal.width;
+	  //       LGlobal.canvasObj.height = LGlobal.height;
+	  //       LGlobal.canvasObj.style.width = LGlobal.width + "px";
+	  //       LGlobal.canvasObj.style.height = LGlobal.height + "px";	  		
+
+			LGlobal.align = LStageAlign.TOP_MIDDLE;
+			LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
+			LSystem.screen(LStage.FULL_SCREEN);
+		}
+	</script>
+</body>
+</html>

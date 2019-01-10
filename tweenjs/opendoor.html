@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{margin: 0;padding: 0}
+        div{position: relative;width: 800px;height: 400px;overflow: hidden;}
+        li img{width: 800px;height:400px;}
+        ul{list-style: none;position: absolute;}
+        ul li{position: absolute;}
+        #btn1{margin-left: 310px;width: 80px;height: 30px;}
+        #btn2{margin-left: 20px;width: 80px;height: 30px;}
+        #li1{width: 399px;height: 400px;background-color: darkgrey;
+            border-right:1px red solid;  }
+        #li2{width: 399px;height: 400px;background-color: darkgrey;margin-left: 400px; border-left:1px red solid;}
+    </style>
+</head>
+<body>
+<div id="div">
+    <ul>
+        <li><img src="img4.jpg" alt=""/></li>
+        <li id="li1"></li>
+        <li id="li2"></li>
+    </ul>
+</div>
+<button id="btn1">开门</button>
+<button id="btn2">关门</button>
+</body>
+<script type="text/javascript" src="tween.js"></script>
+<script type="text/javascript">
+    var div=document.getElementById("div");
+    var li1=document.getElementById("li1");
+    var li2=document.getElementById("li2");
+    var btn1=document.getElementById("btn1");
+    var btn2=document.getElementById("btn2");
+
+    timer=null;
+    timer1=null;
+    btn1.onclick=function() {
+//        左开门
+        fun();
+        function fun() {
+            var t = 0;          //t:当前已经运动的时间=== 0
+            var b = 0;          // b:初始位置=== 0
+            var c = -400;       //c:变化的值=== -400
+            var d = 100;        //d:总步数  总时间=== 100
+            timer = setInterval(function () {
+                        t += 2;
+                        if (t == d) {
+                            clearInterval(timer)
+                        }
+                        li1.style.left = Tween.Linear(t, b, c, d) + "px";
+                    }
+                    , 30);
+        }
+//右开门
+        fun1();
+        function fun1() {
+
+            var t = 0;      //t:当前已经运动的时间=== 0
+            var b = 0;      // b:初始位置=== 0
+            var c = 400;    //c:变化的值=== 400
+            var d = 100;    //d:总步数  总时间=== 100
+            timer1 = setInterval(function () {
+
+                t += 2;
+                if (t == d) {
+                    clearInterval(timer1)
+                }
+                li2.style.left = Tween.Linear(t, b, c, d) + "px";
+            }, 30);
+        }
+    };
+    
+    timer2=null;
+    timer3=null;
+    btn2.onclick=function(){
+//        左关门
+        fun2();
+        function fun2() {
+            var t = 0;          //t:当前已经运动的时间=== 0
+            var b = -400;       // b:初始位置=== -400
+            var c = 400;        //c:变化的值=== 400
+            var d = 100;        //d:总步数  总时间=== 100
+            timer2 = setInterval(function () {
+
+                t += 2;
+                if (t == d) {
+                    clearInterval(timer2)
+                }
+                li1.style.left = Tween.Bounce.easeOut(t, b, c, d) + "px";
+            }, 30);
+        }
+//        右关门
+        fun3();
+        function fun3() {
+            var t = 0;          //t:当前已经运动的时间=== 0
+            var b = 400;        // b:初始位置=== 400
+            var c = -400;       //c:变化的值=== -400
+            var d = 100;        //d:总步数  总时间=== 100
+            timer3 = setInterval(function () {
+
+                t += 2;
+                if (t == d) {
+                    clearInterval(timer3)
+                }
+                li2.style.left = Tween.Bounce.easeOut(t, b, c, d) + "px";
+            }, 30);
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jumpdown</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+	<style type="text/css">
+		body {margin: 0}
+	</style>
+	<script type="text/javascript" src="../../js/lufylegend-1.10.1.js"></script>
+<!--	<script type="text/javascript" src="../../js/lufylegend-1.7.6.min.js"></script> -->	
+	<script type="text/javascript" src="./js/Boss.js"></script>
+	<script type="text/javascript" src="./js/Plain.js"></script>
+	<script type="text/javascript" src="./js/Enemy.js"></script>
+	<script type="text/javascript" src="./js/Player.js"></script>
+	<script type="text/javascript" src="./js/Bullet.js"></script>
+	<script type="text/javascript" src="./js/BulletCtrl.js"></script>
+	<script type="text/javascript" src="./js/Main.js"></script>
+	<script type="text/javascript">
+		function doScroll(){
+			if(window.pageYOffset===0) {
+				window.scrollTo(0,1);
+			}
+		}
+		window.onload=function(){
+			setTimeout(doScroll, 100);
+			LInit(1000/50,"mylegend",800,400,main,LEvent.INIT);
+		}
+
+		window.onorientationchange=function(){
+			setTimeout(doScroll,100);
+		}
+		window.onresize=function(){
+			setTimeout(doScroll,100);
+		}
+		function onWindowResize(){
+			setTimeout(doScroll,100);
+		}
+	</script>
+</head>
+<body>
+	<div id="mylegend">loading...</div>
+</body>
+</html>

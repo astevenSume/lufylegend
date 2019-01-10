@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>add</title>
+		<script type="text/javascript" src="http://lufylegend.com/js/lufylegend-1.10.1.min.js"></script>
+		<script type="text/javascript" src="http://lufylegend.com/js/lib/lufylegend.ui-0.14.0.min.js"></script>
+	</head>
+	<body>
+			<div id="legend">
+			</div>
+			<script>
+			LInit(50, "legend", 800, 480, main);
+
+			function getcolor(){
+				if (Math.random()>0.5){
+					return '#fafafa';
+				} else {
+					//return '#000';
+				}
+			}
+			function main () {
+					var shape = new Test();
+				
+					
+			}
+
+			function Test(){
+				base(this,LSprite,[]);
+					addChild(this);
+				    this.graphics.beginPath();
+				    this.graphics.lineWidth(1); //宽度
+				    // self.graphics.globalAlpha = self.alpha; //设置透明度
+				    //创建横向渐变颜色,起点坐标至终点坐标
+				    // var line = self.graphics.createLinearGradient(self.x, self.y, 
+				    //     self.x + self.width, 
+				    //     self.y - self.height);
+				    //分段设置颜色
+				    // self.graphics.addColorStop(0, "white");
+				    // self.graphics.addColorStop(0.3, self.color1);
+				    // self.graphics.addColorStop(0.6, self.color2);
+				    // self.graphics.strokeStyle = line;
+				    this.graphics.strokeStyle("#000");
+				    //起点
+				    this.graphics.moveTo(0, 0);
+				    console.log("sdf : " )
+				    //终点
+				    this.graphics.lineTo(44, 55);
+				    this.graphics.closePath();
+				    this.graphics.stroke();
+			}
+			</script>
+	</body>
+</html>

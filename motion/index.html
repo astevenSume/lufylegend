@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8" />
+	<title>运动</title>
+		<script type="text/javascript" src="http://lufylegend.com/js/lufylegend-1.10.0.min.js"></script>
+		<script type="text/javascript" src="http://lufylegend.com/js/lib/lufylegend.ui-0.14.0.min.js"></script>
+	</head>
+	<body style="margin:0;padding:0;">
+			<div id="legend">
+			</div>
+<script type="text/javascript">
+	// init(1000/60,"legend",800,400,main);
+	// var circle;
+	// function main(){
+	// 	circle = new LSprite();
+	// 	circle.graphics.drawArc(1,"#FF0000",[0,0,5,0,Math.PI*2],true,"#FF0000");
+	// 	addChild(circle);
+	// 	circle.p0 = {x:0,y:0};
+	// 	circle.p1 = {x:700,y:200};
+	// 	circle.p2 = {x:200,y:200};
+	// 	circle.p3 = {x:200,y:20};
+	// 	circle.t = 0;
+	// 	LTweenLite.to(circle,2,{t:1,onUpdate:function(event){
+	// 		var target = event.target;
+	// 		target.x = bezierCurve(target.t, target.p0.x, target.p1.x, target.p2.x, target.p3.x);
+	// 		target.y = bezierCurve(target.t, target.p0.y, target.p1.y, target.p2.y, target.p3.y);
+	// 	},ease:LEasing.Sine.easeInOut})
+	// }
+	// function bezierCurve(t, p0, p1, p2, p3){
+	// 	// return t*(p0+p1+p2+p3);
+	// 	return p0 * Math.pow(1-t, 3) + 3 * p1 * t * Math.pow(1-t, 2) + 3 * p2 * Math.pow(t, 2) * (1-t) + p3 * Math.pow(t, 3);
+	// }
+
+	LInit(1000/50,"legend",800,450,main);
+	function main(){
+	    LGlobal.setDebug(true);
+	    var circle = new LSprite();
+	    circle.x = 50;
+	    circle.y = 50;
+	    circle.graphics.drawArc("#FF0000",1,[0,0,20,0,Math.PI*2],true,"#FF0000");
+	    addChild(circle);
+	    var rect = new LSprite();
+	    rect.x = 50;
+	    rect.y = 100;
+	    rect.graphics.drawRect("#FF00FF",1,[0,0,20,20],true,"#FF00FF");
+	    addChild(rect);
+	    LTweenLite.to(circle,2,{x:500,y:400,scaleX:3,scaleY:3,ease:LEasing.Strong.easeInOut})
+	    .to(circle,2,{x:700,y:50,scaleX:1,scaleY:1,ease:LEasing.Quint.easeIn,onComplete:function(e){
+	        trace(e.currentTarget);
+	        trace(e.target);//circle
+	    }});
+	    LTweenLite.to(rect,1,{x:500,loop:true,ease:LEasing.Sine.easeInOut})
+	    .to(rect,1,{x:50,ease:LEasing.Quad.easeInOut});
+	}
+</script>
+	</body>
+</html>

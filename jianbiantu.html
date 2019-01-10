@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>test</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<script type="text/javascript" src="http://lufylegend.com/js/lufylegend-1.9.10.min.js"></script>
+	</head>
+	<body>
+		<div id="legend"></div>
+		<script type="text/javascript">
+		LInit(50, "legend", 800, 480, main);
+		var imgData = [
+			{name:"bg",path:"images/bg.jpg"},
+			{name:"face",path:"http://lufylegend.com/images/face.jpg"}
+		];
+		var loadingLayer;
+		function main(){
+			LMouseEventContainer.set(LMouseEvent.MOUSE_MOVE,true);
+			if(LGlobal.mobile){
+				LGlobal.stageScale = LStageScaleMode.EXACT_FIT;
+			}else{
+				LGlobal.stageScale = LStageScaleMode.NO_SCALE;
+			}
+			LSystem.screen(LStage.FULL_SCREEN);
+		    loadingLayer = new LoadingSample1();
+		    addChild(loadingLayer);
+			LLoadManage.load(imgData,function(progress){
+		            loadingLayer.setProgress(progress);
+		         },gameInit);
+		}
+		function gameInit(result){
+			loadingLayer.remove();
+			var backLayer = new LSprite();
+			addChild(backLayer);
+
+			var bitmapdata = new LBitmapData(result["bg"]);
+			var bitmapdataFace = new LBitmapData(result["face"]);
+			var bitmap = new LBitmap(bitmapdata);
+			backLayer.addChild(bitmap);
+			var faceLayer = new LSprite();
+
+			var bitmapFace = new LBitmap(bitmapdataFace);
+			var bitmap = getGradientBitmap(bitmapFace);
+			faceLayer.addChild(bitmap);
+			backLayer.addChild(faceLayer);
+		}
+		function getGradientBitmap(displayObject){
+			var layer = new LSprite();
+			var minR = 50,maxR=120;
+			var grd = LGlobal.canvas.createRadialGradient(displayObject.getWidth()*0.5,displayObject.getHeight()*0.5, minR, displayObject.getWidth()*0.5,displayObject.getHeight()*0.5, maxR);
+			grd.addColorStop(0,"rgba(0, 0, 0, 1)");
+			grd.addColorStop(1,"rgba(0, 0, 0, 0)");
+			var colorLayer = new LSprite();
+			colorLayer.graphics.drawRect(0,"#000000",[0,0,displayObject.getWidth(),displayObject.getHeight()],true,grd);
+			layer.addChild(colorLayer);
+			var gradientLayer = new LSprite();
+			gradientLayer.addChild(displayObject);
+			var grd = LGlobal.canvas.createRadialGradient(displayObject.getWidth()*0.5,displayObject.getHeight()*0.5, minR, displayObject.getWidth()*0.5,displayObject.getHeight()*0.5, maxR);
+			grd.addColorStop(0,"rgba(0, 0, 0, 0)");
+			grd.addColorStop(1,"rgba(0, 0, 0, 1)");
+			var faceColorLayer = new LSprite();
+			gradientLayer.addChild(faceColorLayer);
+			faceColorLayer.graphics.drawRect(0,"#000000",[0,0,displayObject.getWidth(),displayObject.getHeight()],true,grd);
+
+			gradientLayer = getBitmap(gradientLayer);
+			gradientLayer.blendMode = LBlendMode.LIGHTER;
+			layer.addChild(gradientLayer);
+			return layer;
+		}
+		function getBitmap(displayObject){
+			var bitmapData = new LBitmapData(null,0,0,displayObject.getWidth(),displayObject.getHeight(),LBitmapData.DATA_CANVAS);
+			bitmapData.draw(displayObject);
+			return new LBitmap(bitmapData);
+		}
+		</script>
+	</body>
+</html>

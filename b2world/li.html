@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Box2web</title>
+	<script type="text/javascript" src="../../js/Box2dWeb-2.1.a.3.min.js"></script>
+	<script type="text/javascript" src="../../js/lufylegend-1.10.1.js"></script>
+</head>
+<body onload='init(10,"mylegend",400,500,main,LEvent.INIT)'>
+	<div id="mylegend">loading....</div>
+<script type="text/javascript">
+var imglist={};
+var imgData=new Array(
+		{name:'face',path:'./face.jpg'}
+	);
+function main(){
+		LGlobal.setDebug(true);
+		backLayer=new LSprite();
+	//	backLayer.graphics.drawRect(0,"#000000",[0,0,600,400],false);
+	//		console.log(backLayer.getWidth());
+		addChild(backLayer);
+
+		LLoadManage.load(imgData,null,gameInit);
+		
+}
+function gameInit(result){
+	imglist=result;
+	LGlobal.box2d=new LBox2d();
+
+	// cLayer=new LSprite();
+	// backLayer.addChild(cLayer);
+	// cLayer.x=300;
+	// cLayer.y=390;
+	// cLayer.addBodyPolygon(600,10,0,5,0.4,0.2);
+
+
+	//力的测试
+	//backLayer.addEventListener(LMouseEvent.MOUSE_DOWN, createBox);
+	//知道了力，那就要求碰撞时受了多大的力
+
+	cLayer=new LSprite();
+	cLayer.x=0;
+	cLayer.y=0;
+	backLayer.addChild(cLayer);
+	var shapeArr = new Array(
+			[[0,0],[800,0],[800,10],[0,10]],
+			[[800,0],[800,400],[790,400],[790,10]],
+			[[800,400],[0,400],[0,390],[790,390]],
+			[[0,0],[10,0],[10,400],[0,400]]
+		);
+	cLayer.addBodyVertices(shapeArr,0,0,0,.5,.4,.5);
+	for (var i=0; i<5;i++){
+		cLayer=new LSprite();
+		console.log(LGlobal.box2d.drawScale);
+		cLayer.x=Math.random()*10*LGlobal.box2d.drawScale+10;
+		cLayer.y=10;
+		backLayer.addChild(cLayer);
+		var w = (Math.random()*2+0.5)*LGlobal.box2d.drawScale;
+		var h = (Math.random()*2+0.5)*LGlobal.box2d.drawScale;
+		cLayer.addBodyPolygon(w,h,1,5,.4,.2);
+
+	}
+	box01=new LSprite();
+	box01.name='mybox';
+	box01.x=250;
+	box01.y=200;
+	backLayer.addChild(box01);
+	box01.addBodyCircle(30,0,0,0,1,.5,.6);
+	box01.setBodyMouseJoint(true);
+
+	label=new LTextField();
+	backLayer.addChild(label);
+	// LGlobal.box2d.setEvent(LEvent.POST_SOLVE, postSolve);
+	backLayer.addEventListener(LEvent.ENTER_FRAME, onframe);
+
+
+}
+
+function onframe(event){
+	backLayer.x = LGlobal.width*0.5-box01.x;
+	console.log(LGlobal.width*0.5-box01.x);
+	// if (backLayer.x > 0) {
+	// 	backLayer.x=0;
+	// } else if (backLayer.x < LGlobal.width - 800) {
+	// 	backLayer.x=LGlobal.width-800;
+	// }
+	backLayer.x=0;
+	LGlobal.box2d.synchronous();
+}
+
+function postSolve(contact, impulse){
+	var objA = contact.GetFixtureA().GetBody().GetUserData();
+	var objB = contact.GetFixtureB().GetBody().GetUserData();
+	if (objA.type="LSprite" && objA.name=="mybox"){
+		label.text=impulse.normalImpulses[0];
+	} else if (objB.type="LSprite" && objB.name=="mybox") {
+		label.text=impulse.normalImpulses[0];
+	}
+}
+function createBox(event) {
+	//加入一个物体
+	var box01=new LSprite();
+	box01.x=event.selfX;
+	box01.y=event.selfY;
+	backLayer.addChild(box01);
+
+	box01.addBodyCircle(30,0,0,1,1,.5,.6);
+
+
+	var force=500;
+	var vec=new LGlobal.box2d.b2Vec2(500, 2000);
+	box01.box2dBody.ApplyForce(vec, box01.box2dBody.GetWorldCenter());
+
+}
+
+</script>
+</body>
+</html>

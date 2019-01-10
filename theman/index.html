@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jumpdown</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+	<style type="text/css">
+		body {margin: 0}
+	</style>
+	<script type="text/javascript" src="../../js/lufylegend-1.10.1.js"></script>
+<!--	<script type="text/javascript" src="../../js/lufylegend-1.7.6.min.js"></script> -->
+	
+	<script type="text/javascript" src="./js/background.js"></script>
+	<script type="text/javascript" src="./js/floor.js"></script>
+	<script type="text/javascript" src="./js/chara.js"></script>
+	<script type="text/javascript" src="./js/Main.js"></script>
+	<script type="text/javascript">
+		function doScroll(){
+			if(window.pageYOffset===0) {
+				window.scrollTo(0,1);
+			}
+		}
+		var realGlobal={};
+		window.onload=function(){
+			setTimeout(doScroll, 100);
+			LInit(1000/100,"mylegend",320,480,main,LEvent.INIT);
+
+			realGlobal.width=320;
+			realGlobal.height=480;
+
+			LGlobal.width=window.innerWidth; 
+			LGlobal.height=window.innerHeight;
+
+			LGlobal.align = LStageAlign.TOP_LEFT;
+			LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
+			LSystem.screen(LStage.FULL_SCREEN);
+		}
+
+		window.onorientationchange=function(){
+			setTimeout(doScroll,100);
+		}
+		window.onresize=function(){
+			setTimeout(doScroll,100);
+		}
+		function mains(){
+			// LGlobal.width=window.innerWidth; 
+			// LGlobal.height=window.innerHeight;
+			// LGlobal.canvasObj.width=LGlobal.width;  //canvas已经被以240的基数被扩大了，此时不论屏幕多大，那么240*240的背景图片都全屏铺满
+
+			// LGlobal.canvasObj.height=LGlobal.height;
+			// LGlobal.canvasObj.style.width=LGlobal.width;
+			// LGlobal.canvasObj.style.height=LGlobal.height;
+			// LGlobal.canvasObjStyleWidth=LGlobal.width+"px";
+			// LGlobal.canvasObjStyleHheight=LGlobal.height+"px";
+			LGlobal.align = LStageAlign.TOP_LEFT;
+			LGlobal.stageScale = LStageScaleMode.SHOW_ALL;
+			LSystem.screen(LStage.FULL_SCREEN);
+
+
+			console.log(LGlobal.width);
+
+			backlayer=new LSprite();
+			backlayer.graphics.drawRect(1,"#ccc",[0,0,LGlobal.width,LGlobal.height],true,"#cccccc");
+			addChild(backlayer);
+
+			var imgobj=document.getElementById("imgs");
+			var bitmap = new LBitmap(new LBitmapData(imgobj));			
+			backlayer.addChild(bitmap);			
+		}
+		function onWindowResize(){
+
+		}
+	</script>
+</head>
+<body>
+	<div id="mylegend">loading...</div>
+	<img id="imgs" src="face.jpg" style="display:none" />
+</body>
+</html>
